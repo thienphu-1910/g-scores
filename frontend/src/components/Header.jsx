@@ -28,6 +28,7 @@ const Header = () => {
           <div className="hidden md:flex flex-row gap-7 justify-center items-end">
             {navbarOptions.map((option) => (
               <NavLink
+                key={option.title}
                 to={option.to}
                 className={({ isActive }) =>
                   `text-sm relative group duration-300  ${
