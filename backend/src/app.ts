@@ -1,16 +1,20 @@
+import "dotenv/config";
 import express from "express";
 import type { Request, Response } from "express";
+import { searchRouter } from "./routes/search.route.js";
+import morgan from "morgan";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = (process.env.PORT) || 3000;
 
-// Middleware to parse incoming JSON payloads
 app.use(express.json());
+app.use(morgan('dev'));
 
-// Root path handler
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Hello from TypeScript Express API!" });
 });
+
+app.use('/api', searchRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
