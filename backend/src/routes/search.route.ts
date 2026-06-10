@@ -5,7 +5,7 @@ import { searchController } from "../controllers/search.controller.js";
 const searchRouter = express.Router();
 
 searchRouter.get(
-  "/search-scores",
+  "/search-scores/:regisNumber",
   validateRegistrationNumber,
   searchController.findScoresViaRegistrationNumber,
 );

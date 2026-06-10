@@ -4,7 +4,7 @@ import { searchService } from "../services/search.service.js";
 export const searchController = {
   findScoresViaRegistrationNumber: async (req: Request, res: Response) => {
     try {
-      const { regisNumber } = req.body;
+      const regisNumber = String(req.params.regisNumber);
       const scores = await searchService.findScoresViaRegistrationNumber(regisNumber);
 
       if (!scores) {

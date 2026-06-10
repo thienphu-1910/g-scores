@@ -10,7 +10,7 @@ function validateRegistrationNumber(
 ) {
   const {
     regisNumber
-  } = req.body;
+  } = req.params;
   const result = RegistrationNumber.safeParse(regisNumber);
   if (result.success) {
     next();
