@@ -5,7 +5,9 @@
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/app.js"
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "@prisma/adapter-pg": "^7.8.0",
+    "@types/express": "^5.0.6",
     "@types/node": "^25.9.2",
     "@types/pg": "^8.20.0",
     "dotenv": "^17.4.2",
