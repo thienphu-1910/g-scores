@@ -56,6 +56,16 @@ cd backend
 2. Create a new database project.
 3. Run the Prisma initialization/pull command provided by the console within your backend folder to sync the schema.
 
+**Migration and Seeder:**
+1. Migration
+```bash
+npx prisma migrate dev
+```
+2. Seeding
+```bash
+npx prisma db seed
+```
+
 **Redis Configuration:**
 
 1. Provision a new Redis database.
