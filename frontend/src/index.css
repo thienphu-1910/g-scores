@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url('https://fonts.google.com/specimen/Rubik?query=Rubik');
+@import "tailwindcss";
 
 :root {
   --text: #6b6375;
@@ -36,4 +36,9 @@
 body {
   margin: 0;
   font-family: 'Rubik', sans-serif;
+}
+
+button:hover {
+  cursor: pointer;
+  /* scale: 102%; */
 }

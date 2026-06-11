@@ -2,24 +2,41 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/app.js"
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@prisma/client": "^7.8.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
+    "csv-parser": "^3.2.1",
     "express": "^5.2.1",
     "helmet": "^8.2.0",
-    "morgan": "^1.11.0"
+    "ioredis": "^5.11.1",
+    "morgan": "^1.11.0",
+    "redis": "^6.0.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "@prisma/adapter-pg": "^7.8.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^25.9.2",
+    "@types/pg": "^8.20.0",
+    "dotenv": "^17.4.2",
+    "nodemon": "^3.1.14",
+    "pg": "^8.21.0",
+    "prisma": "^7.8.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
   }
 }

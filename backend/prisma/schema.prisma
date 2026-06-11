@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  previewFeatures = ["strictUndefinedChecks"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Scores {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  regisNumber String @unique @map("regis_number")
+  mathScore Decimal? @map("math_score") @db.Decimal(5, 2)
+  literatureScore Decimal? @map("literature_score") @db.Decimal(5, 2)
+  foreignLgScore Decimal? @map("foreign_lg_score") @db.Decimal(5, 2)
+  physicsScore Decimal? @map("physics_score") @db.Decimal(5, 2)
+  chemistryScore Decimal? @map("chemistry_score") @db.Decimal(5, 2)
+  biologyScore Decimal? @map("biology_score") @db.Decimal(5, 2)
+  historyScore Decimal? @map("history_score") @db.Decimal(5, 2)
+  geographyScore Decimal? @map("geography_score") @db.Decimal(5, 2)
+  phyEduScore Decimal? @map("phy_edu_score") @db.Decimal(5, 2)
+  foreignLgCode ForeignLanguageCode? @map("foreign_lg_code")
+
+  @@map("scores")
+}
+
+enum ForeignLanguageCode {
+  N1
+  N2
+  N3
+  N4
+  N5
+  N6
+  N7
+}
