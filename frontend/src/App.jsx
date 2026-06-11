@@ -14,9 +14,10 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
-        <Route element={<MainLayout />}>        
+        <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/search-scores" element={<SearchPage />} />
+          <Route path="/search-scores/:regisNumber" element={<SearchPage />} />
           <Route path="/reports" element={<DashboardPage />} />
         </Route>
       </Routes>
