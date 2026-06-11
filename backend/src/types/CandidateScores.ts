@@ -1,9 +1,8 @@
 import { Decimal } from "../generated/prisma/internal/prismaNamespace.js";
 import { ForeignLanguageCode } from "../generated/prisma/enums.js";
 
-export type Scores = {
-  regisNumber: string;
-  id: string;
+export type CandidateScores = {
+  regisNumber: string;  
   createdAt: Date;
   mathScore: Decimal | null;
   literatureScore: Decimal | null;
