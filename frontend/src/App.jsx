@@ -7,14 +7,12 @@ import {
 import MainLayout from "./layouts/MainLayout";
 import DashboardPage from "./pages/DashboardPage";
 import SearchPage from "./pages/SearchPage";
-import JobProgressBar from "./components/JobProgressBar";
 import { ReportPage } from "./pages/ReportPage";
 //import "./App.css";
 
 function App() {
   return (
-    <Router>
-      <JobProgressBar />
+    <Router>      
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route element={<MainLayout />}>
