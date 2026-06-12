@@ -1,5 +1,0 @@
-class Subject {
-  constructor(subjectName) { }
-  
-  
-}
