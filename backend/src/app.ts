@@ -12,7 +12,13 @@ const PORT = (process.env.PORT) || 3000;
 
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", 
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
+    allowedHeaders: ["Content-Type", "Accept"],    
+  }),
+);
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Hello from TypeScript Express API!" });
