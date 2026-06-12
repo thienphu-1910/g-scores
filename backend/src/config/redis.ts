@@ -13,4 +13,10 @@ redis.on("error", (err) => console.log("Redis Client Error", err));
 
 await redis.connect();
 
-export { redis };
+const redisPub = redis.duplicate();
+const redisSub = redis.duplicate();
+
+await redisPub.connect();
+await redisSub.connect();
+
+export { redis, redisPub, redisSub };
