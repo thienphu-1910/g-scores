@@ -20,7 +20,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use('/api', searchRouter);
 app.use('/api', reportRouter);
-app.use('/api', topScoresRouter);
+app.use('/api', topScoresRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

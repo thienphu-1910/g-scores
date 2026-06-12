@@ -7,18 +7,21 @@ import {
 import MainLayout from "./layouts/MainLayout";
 import DashboardPage from "./pages/DashboardPage";
 import SearchPage from "./pages/SearchPage";
+import JobProgressBar from "./components/JobProgressBar";
+import { ReportPage } from "./pages/ReportPage";
 //import "./App.css";
 
 function App() {
   return (
     <Router>
+      <JobProgressBar />
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/search-scores" element={<SearchPage />} />
           <Route path="/search-scores/:regisNumber" element={<SearchPage />} />
-          <Route path="/reports" element={<DashboardPage />} />
+          <Route path="/reports" element={<ReportPage />} />
         </Route>
       </Routes>
     </Router>
