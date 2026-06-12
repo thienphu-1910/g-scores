@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
@@ -24,8 +24,8 @@ const Header = () => {
     <>
       {/* Main Header */}
       <header className="w-full h-fit bg-blue-950 px-4 py-3 sticky top-0 z-40 shadow-sm">
-        <div className="w-full flex flex-row justify-between items-center">
-          <h2 className="text-2xl text-white font-bold">G-Scores</h2>
+        <div className="w-full flex flex-row justify-between md:justify-start md:gap-5 items-center">
+          <Link to="/dashboard" className="text-2xl text-white font-bold">G-Scores</Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex flex-row gap-7 justify-center items-end">
