@@ -75,7 +75,7 @@ npx prisma db seed
 REDIS_USERNAME=your_username
 REDIS_PASSWORD=your_password
 REDIS_SOCKET_HOST=your_socket_host
-REDIS_SOCKET_PORT=your_socket_port
+REDIS_PORT=your_socket_port
 
 ```
 
