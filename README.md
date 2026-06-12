@@ -118,28 +118,30 @@ npm run dev
 
 ## Workflows
 
-### 1. Synchronous Workload: Score Retrieval (Search Scores)
+## 🏗 Architecture & Data Flow
 
-This is a standard, low-latency Request-Response cycle designed for quick data fetching.
+This service utilizes an event-driven, decoupled architecture to handle intensive calculations without blocking the main Node.js event loop. Background processing is managed by **BullMQ**, real-time client updates are streamed via **Server-Sent Events (SSE)**, and inter-process communication relies on **Redis Pub/Sub**.
 
-* **Request Initiation:** The user inputs a Registration Number on the frontend client, which triggers an HTTP `GET` request to the Express.js server.
-* **Database Query:** The server's controller receives the request and utilizes the Prisma ORM to execute a read query against the primary database (e.g., PostgreSQL).
-* **Response Delivery:** Once Prisma resolves the query, the backend formats the data and returns a synchronous JSON response back to the client to render the score.
+### 📊 Subject Reports Generation
 
-**Architectural Characteristic:** This flow is synchronous and blocking only at the database I/O level. It relies on database indexing on the Registration Number for optimal query performance.
+*Calculates score distributions (Excellent, Good, Average, Poor) across large datasets.*
 
-### 2. Asynchronous Workload: Report Generation
+1. **Trigger:** The client submits an array of subject codes via a `POST` request. The API enqueues a `generate-report` job in BullMQ and immediately returns a `202 Accepted` response.
+2. **Subscribe:** The client opens an SSE connection (`GET /stream-reports`). The backend attaches a dedicated Redis subscriber to listen for completion events.
+3. **Process:** An isolated BullMQ Worker processes the job, aggregates the data via Prisma, and saves the result to the Redis store.
+4. **Broadcast & Stream:** The worker publishes the result to a shared Redis channel. The SSE endpoint intercepts the message and streams the calculated distribution back to the client in real-time.
 
-This workload handles computationally expensive or time-consuming operations by decoupling the request from the processing using a message queue, caching, and an event-driven response mechanism.
+---
 
-* **Request & Cache Verification:** The user selects target subjects for the report. The client sends this payload to the server. Before performing any calculations, the server queries the Redis cache using a unique hash of the requested parameters to check for existing, pre-calculated data.
-* *Cache Hit:* If the data exists, it is immediately returned to the client, bypassing all subsequent steps.
-* *Cache Miss:* If the data does not exist, the server proceeds to the queuing phase.
+### 🏆 Top Scorers Leaderboard
+
+*Aggregates and ranks the top 10 candidates across dynamic, user-defined subject groups.*
+
+1. **Trigger & Deterministic Caching:** The client requests a leaderboard for a specific group. The backend generates a deterministic, sorted cache key (e.g., `top-chemistry_math_physics`) to ensure identical combinations share the same cache.
+2. **Cache Evaluation:**
+* **Cache Hit:** If the data exists in Redis, it is immediately streamed to the client via SSE, bypassing the worker entirely.
+* **Cache Miss:** If missing, a job is queued in BullMQ, and the SSE endpoint subscribes to the worker's broadcast channel.
 
 
-* **Job Queuing:** The server acts as a Producer, enqueuing a new job containing the requested subject parameters into BullMQ. The server then immediately opens a Server-Sent Events (SSE) connection with the client, keeping the channel alive without blocking the main Node.js event loop.
-* **Background Processing:** A dedicated background Worker process (consuming from BullMQ) picks up the job. It performs the heavy data aggregation and mathematical calculations required for the report.
-* **State Persistence & Event Dispatch:** Upon completing the calculation, the Worker saves the final report data back into the Redis cache (with an appropriate Time-To-Live expiration) to serve future identical requests.
-* **Real-time Delivery:** The backend, listening for the job completion event from BullMQ, pushes the generated report data down the established SSE pipeline to the waiting client, which then closes the connection and renders the visualization.
-
-**Architectural Characteristic:** By offloading the heavy calculations to a BullMQ worker, the main API server remains highly responsive and capable of handling thousands of concurrent requests. The integration of Redis prevents redundant processing, and SSE provides a seamless, unidirectional real-time user experience without the overhead of WebSockets or client-side polling.
+3. **Idempotent Processing:** The worker verifies the cache hasn't been filled by a concurrent process, calculates the top 10 sums, and caches the final payload.
+4. **Broadcast & Stream:** The worker publishes the payload, the SSE endpoint catches it, streams the top 10 leaderboard to the client, and safely closes the connection.
