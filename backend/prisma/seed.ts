@@ -92,7 +92,7 @@ async function main() {
   let chunkCount = 0;
   while (chunkCount < totalSize) {
     try {
-      const createMany = await prisma.scores.createMany({
+      const createMany = await prisma.candidateScores.createMany({
         data: results.slice(chunkCount, chunkCount + CHUNK_SIZE),
         skipDuplicates: true,
       });           
@@ -112,7 +112,7 @@ main()
 
 async function validation() {
   const results = await loadCSV("../dataset/diem_thi_thpt_2024.csv");
-  const scores = await prisma.scores.findMany();
+  const scores = await prisma.candidateScores.findMany();
   
 
   console.log(`CSV rows: ${results.length}`);

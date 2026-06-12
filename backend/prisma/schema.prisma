@@ -13,10 +13,9 @@ datasource db {
   provider = "postgresql"
 }
 
-model Scores {
-  id String @id @default(uuid())
-  createdAt DateTime @default(now()) @map("created_at")
-  regisNumber String @unique @map("regis_number")
+model CandidateScores {  
+  regisNumber String @id @map("regis_number")
+  createdAt DateTime @default(now()) @map("created_at")  
   mathScore Decimal? @map("math_score") @db.Decimal(5, 2)
   literatureScore Decimal? @map("literature_score") @db.Decimal(5, 2)
   foreignLgScore Decimal? @map("foreign_lg_score") @db.Decimal(5, 2)
@@ -28,7 +27,7 @@ model Scores {
   phyEduScore Decimal? @map("phy_edu_score") @db.Decimal(5, 2)
   foreignLgCode ForeignLanguageCode? @map("foreign_lg_code")
 
-  @@map("scores")
+  @@map("candidate_scores")
 }
 
 enum ForeignLanguageCode {
