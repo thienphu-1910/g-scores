@@ -2,12 +2,14 @@
 
 A modern, full-stack web application designed for high performance and scalability. This project utilizes a React frontend paired with a robust Express backend, leveraging Redis and BullMQ for reliable background job processing, and Prisma ORM for type-safe database interactions.
 
+## Deployment
+**Deployed Live Application:** [G-Scores](https://g-scores-pearl.vercel.app/)
+
 ## 🚀 Tech Stack
 
 ### Frontend
 * **Core:** ReactJS, React Router DOM
 * **Styling:** TailwindCSS
-* **State Management:** Zustand
 * **Forms & Validation:** React Hook Form
 * **API Client:** Axios
 * **Data Visualization:** Chart.js
@@ -102,7 +104,7 @@ cd frontend
 Create a `.env` file in the frontend root and map your API target:
 
 ```env
-VITE_BASE_URL=http://localhost:3000/api
+VITE_BASE_URL=<your_url>/api
 
 ```
 
