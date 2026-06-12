@@ -39,6 +39,7 @@ const handleJob = async (job: Job) => {
   });
   await redisPub.set(`data-${subjectCode}`, JSON.stringify(reportData));
   await redisPub.publish(channelName, messagePayload);
+  console.log(messagePayload);
 };
 
 const reportWorker = new Worker("report", handleJob, {
@@ -47,12 +48,18 @@ const reportWorker = new Worker("report", handleJob, {
 
 export const reportService = {
   createReportJobs: async (subjectCodes: string[]) => {
-    for (const code of subjectCodes) {
-      if (isExistSubject(code)) {
-        await addReportJob({
-          subjectCode: code,
-        });
+    try {
+      for (const code of subjectCodes) {
+        if (isExistSubject(code)) {
+          await addReportJob({
+            subjectCode: code,
+          });
+        }
       }
+  
+      return true;
+    } catch (e) {
+      throw e;
     }
   },
 
