@@ -10,13 +10,27 @@ import { topScoresRouter } from "./routes/topScores.route.js";
 const app = express();
 const PORT = (process.env.PORT) || 3000;
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://g-scores-pearl.vercel.app",
+];
+
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(
   cors({
-    origin: "http://localhost:5173", 
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
-    allowedHeaders: ["Content-Type", "Accept"],    
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Accept"],
   }),
 );
 
